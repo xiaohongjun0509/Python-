@@ -10,9 +10,7 @@ import shutil
 #ipa文件夹的绝对路径,这里需要指定你ipa所在的绝对路径
 root = "/Users/xiaohongjun/Documents/iPhone"
 
-
-
-pkgcmd = '/usr/bin/xcrun -sdk iphoneos PackageApplication -v '
+pkgcmd = '/usr/bin/xcrun -sdk iphoneos PackageApplication '
 srcapp = '/Users/xiaohongjun/Documents/Push/Payload/Meilishuo.app'
 
 #--embed 需要指定你存放配置文件的绝对路径
@@ -25,9 +23,10 @@ for folder,subfolder,filename in os.walk(root):
 		ext = os.path.splitext(eachFile)[-1]
 		if ext.endswith('.ipa'):
 			ipafullpath = os.path.join(folder, eachFile)
-			print ipafullpath
+			print '正在打包的ipa路径是：' + ipafullpath
 			#解压
-			cmd = 'unzip ' + ipafullpath + ' -d ' + folder
+			cmd = 'unzip -q ' + ipafullpath + ' -d ' + folder
+			#print cmd
 			os.system(cmd)
 			
 			#删除ipa文件
@@ -43,7 +42,8 @@ for folder,subfolder,filename in os.walk(root):
 			payloadPath = os.path.join(folder, 'Payload/');
 			if os.path.exists(payloadPath):
 				shutil.rmtree(payloadPath)
-	
+
+print '重签名打包完成--------'	
 		
 		
 
